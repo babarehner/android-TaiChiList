@@ -4,6 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.babarehner.taichilist.data.TaiChiListContract.ChiExercises;
+
+import static com.babarehner.taichilist.data.TaiChiListContract.*;
+import static com.babarehner.taichilist.data.TaiChiListContract.ChiExercises.FK_CHI_HEADINGS;
+import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.CHI_HEADING_TABLE_NAME;
+import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH;
+
 
 /**
  * Project Name: Tai Chi List
@@ -36,15 +43,41 @@ public class TaiChiDBHelper extends SQLiteOpenHelper {
 
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
+        final String SQL_CREATE_CHI_HEADINGS_TABLE = "CREATE TABLE " +
+                CHI_HEADING_TABLE_NAME  + " (" +
+                ChiHeadings._IDH + " INTEGER PRIMARY KEY, " +
+                ChiHeadings.C_CHI_HEADINGS + " TEXT NOT NULL);";
+
+        sqLiteDatabase.execSQL(SQL_CREATE_CHI_HEADINGS_TABLE);
+
+        final String SQL_CREATE_CHI_EXERCISES_TABLE = "CREATE TABLE " +
+                ChiExercises.CHI_EXERCISES_TABLE_NAME + " (" +
+                ChiExercises._IDX + " INTEGER PRIMARY KEY, " +
+                FK_CHI_HEADINGS + " INTEGER NOT NULL, " +
+
+                ChiExercises.C_X_NAME + " TEXT , " +
+                ChiExercises.C_SORT_ORDER + " INTEGER, " +
+                ChiExercises.C_FILE_NAME + " TEXT, " +
+                ChiExercises.C_DATE + " TEXT, " +        // Store date as text value
+                ChiExercises.C_NOTES + " TEXT, " +
+                //Create Foreign Key Constraint - need to double check syntax
+               "FOREIGN KEY (" + FK_CHI_HEADINGS + ") REFERENCES " + CHI_HEADING_TABLE_NAME +
+                " ( " + _IDH + " ) ); " ;
+
+        sqLiteDatabase.execSQL(SQL_CREATE_CHI_EXERCISES_TABLE);
     }
 
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         // Note that this only fires if you change the version number for your database.
         // It does NOT depend on the version number of your application.
         // Currently the next line wipes out all user data and starts with a fresh DB Table
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ChiExercises.CHI_EXERCISES_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CHI_HEADING_TABLE_NAME );
+        onCreate(sqLiteDatabase);
     }
+
 }

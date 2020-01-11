@@ -60,7 +60,7 @@ public class TaiChiListContract {
 
 
     // Inner class that defines Chi Exercises table and columns
-    public static final class MachineEntry implements BaseColumns {
+    public static final class ChiExercises implements BaseColumns {
 
         // MIME type of the (@link #CONTENT_URI for a Chi Exercises database table
         public static final String CHI_HEADINGS_LIST_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
