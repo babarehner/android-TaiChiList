@@ -51,7 +51,7 @@ public class TaiChiListContract {
         public static final Uri CHI_HEADINGS_URI = Uri.withAppendedPath(BASE_CONTENT_URI,
                 PATH_CHI_HEADINGS_TABLE_NAME);
 
-        public static final String CHI_HEADING_TABLE_NAME = "TChiHeadings";
+        public static final String CHI_HEADINGS_TABLE = "TChiHeadings";
 
         // the globals for the columns in the TChiHeading table
         public static final String _IDH = BaseColumns._ID;
@@ -63,16 +63,16 @@ public class TaiChiListContract {
     public static final class ChiExercises implements BaseColumns {
 
         // MIME type of the (@link #CONTENT_URI for a Chi Exercises database table
-        public static final String CHI_HEADINGS_LIST_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+        public static final String CHI_EXERCISES_LIST_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
                 + "/" + TAI_CHI_LIST_AUTHORITY + "/" + PATH_CHI_EXERCISES_TABLE_NAME;
         // MIME type of the (@link #CONTENT_URI for a single record
-        public static final String CHI_HEADINGS_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+        public static final String CHI_EXERCISES_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
                 + "/" + TAI_CHI_LIST_AUTHORITY + "/" + PATH_CHI_EXERCISES_TABLE_NAME;
         // Content URI to access the table data in the provider
         public static final Uri CHI_HEADINGS_URI = Uri.withAppendedPath(BASE_CONTENT_URI,
                 PATH_CHI_EXERCISES_TABLE_NAME);
 
-        public static final String CHI_EXERCISES_TABLE_NAME = "TChiExercises";
+        public static final String CHI_EXERCISES_TABLE = "TChiExercises";
 
         //the globals for the columns in the TChiExercises table
         public static final String _IDX = BaseColumns._ID;
