@@ -31,7 +31,7 @@ import java.util.List;
  * limitations under the License.
  */
 
-public class RecyclerViewHorizontalHeaderAdapter extends RecyclerView.Adapter<RecyclerViewHorizontalHeaderAdapter.HeaderViewHolder> {
+public class RecyclerViewHorizontalHeaderAdapter extends RecyclerView.Adapter<RecyclerViewHorizontalHeaderAdapter.HeaderViewHolderX> {
 
     private List<ExerciseHeader>  horizontalHeaderList;
     Context context;
@@ -44,15 +44,15 @@ public class RecyclerViewHorizontalHeaderAdapter extends RecyclerView.Adapter<Re
 
     @NonNull
     @Override
-    public HeaderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HeaderViewHolderX onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflate the layout file
         View headerExerciseView = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_horizontal_item, parent, false);
-        HeaderViewHolder hvh = new HeaderViewHolder(headerExerciseView);
+        HeaderViewHolderX hvh = new HeaderViewHolderX(headerExerciseView);
         return hvh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHorizontalHeaderAdapter.HeaderViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewHorizontalHeaderAdapter.HeaderViewHolderX holder, final int position) {
         holder.txtview.setText(horizontalHeaderList.get(position).getExerciseHeader());
         holder.txtview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,10 +68,10 @@ public class RecyclerViewHorizontalHeaderAdapter extends RecyclerView.Adapter<Re
         return horizontalHeaderList.size();
     }
 
-    public class HeaderViewHolder extends RecyclerView.ViewHolder {
+    public class HeaderViewHolderX extends RecyclerView.ViewHolder {
         TextView txtview;
 
-        public HeaderViewHolder(View view) {
+        public HeaderViewHolderX(View view) {
             super(view);
             txtview = view.findViewById(R.id.idHeader);
         }

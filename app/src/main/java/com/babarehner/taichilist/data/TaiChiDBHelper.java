@@ -9,6 +9,7 @@ import com.babarehner.taichilist.data.TaiChiListContract.ChiExercises;
 import static com.babarehner.taichilist.data.TaiChiListContract.*;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiExercises.FK_CHI_HEADINGS;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.CHI_HEADINGS_TABLE;
+import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.C_CHI_HEADINGS;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH;
 
 
@@ -47,10 +48,19 @@ public class TaiChiDBHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_CHI_HEADINGS_TABLE = "CREATE TABLE " +
                 CHI_HEADINGS_TABLE + " (" +
-                ChiHeadings._IDH + " INTEGER PRIMARY KEY, " +
-                ChiHeadings.C_CHI_HEADINGS + " TEXT NOT NULL);";
+                _IDH + " INTEGER PRIMARY KEY, " +
+                C_CHI_HEADINGS + " TEXT NOT NULL);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_CHI_HEADINGS_TABLE);
+
+        String[] headings = {"Yang", "Song", "Tang"};
+
+        for (String each : headings) {
+            sqLiteDatabase.execSQL("INSERT INTO " + CHI_HEADINGS_TABLE
+                    + " ( " + C_CHI_HEADINGS + " ) "
+                    + " VALUES( "
+                    + "'" + each + "'" + ");");
+        }
 
         final String SQL_CREATE_CHI_EXERCISES_TABLE = "CREATE TABLE " +
                 ChiExercises.CHI_EXERCISES_TABLE + " (" +
@@ -61,10 +71,10 @@ public class TaiChiDBHelper extends SQLiteOpenHelper {
                 ChiExercises.C_SORT_ORDER + " INTEGER, " +
                 ChiExercises.C_FILE_NAME + " TEXT, " +
                 ChiExercises.C_DATE + " TEXT, " +        // Store date as text value
-                ChiExercises.C_NOTES + " TEXT, " +
+                ChiExercises.C_NOTES + " TEXT );";
                 //Create Foreign Key Constraint - need to double check syntax
-               "FOREIGN KEY (" + FK_CHI_HEADINGS + ") REFERENCES " + CHI_HEADINGS_TABLE +
-                " ( " + _IDH + " ) ); " ;
+               //"FOREIGN KEY (" + FK_CHI_HEADINGS + ") REFERENCES " + CHI_HEADINGS_TABLE +
+               // " ( " + _IDH + " ) ); " ;
 
         sqLiteDatabase.execSQL(SQL_CREATE_CHI_EXERCISES_TABLE);
     }

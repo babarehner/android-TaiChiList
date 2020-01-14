@@ -69,7 +69,7 @@ public class TaiChiListContract {
         public static final String CHI_EXERCISES_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
                 + "/" + TAI_CHI_LIST_AUTHORITY + "/" + PATH_CHI_EXERCISES_TABLE_NAME;
         // Content URI to access the table data in the provider
-        public static final Uri CHI_HEADINGS_URI = Uri.withAppendedPath(BASE_CONTENT_URI,
+        public static final Uri CHI_EXERCISES_URI = Uri.withAppendedPath(BASE_CONTENT_URI,
                 PATH_CHI_EXERCISES_TABLE_NAME);
 
         public static final String CHI_EXERCISES_TABLE = "TChiExercises";
