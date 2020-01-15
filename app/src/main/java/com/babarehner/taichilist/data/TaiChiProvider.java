@@ -66,7 +66,6 @@ public class TaiChiProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-
         mDBHelper = new TaiChiDBHelper(getContext());
         return true;
     }
@@ -79,7 +78,7 @@ public class TaiChiProvider extends ContentProvider {
 
         // Create or open a database to write to it
         SQLiteDatabase db = mDBHelper.getReadableDatabase();
-
+        Log.e(LOG_TAG, "Create or Open DB after getReadable");
         Cursor c;
 
         int match = sUriMatcher.match(uri);

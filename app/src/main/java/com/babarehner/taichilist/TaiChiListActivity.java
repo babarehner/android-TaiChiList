@@ -1,9 +1,6 @@
 package com.babarehner.taichilist;
 
-import android.content.ContentUris;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,17 +17,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.CHI_HEADINGS_URI;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.C_CHI_HEADINGS;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH;
 
-public class TaiChiList extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
+public class TaiChiListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
     HeaderCursorAdapter.RecyclerViewClickListener {
+
+    private final String LOG_TAG = TaiChiListActivity.class.getSimpleName();
 
     private static final int HEADER_LOADER_ID = 1;
 
@@ -40,17 +39,19 @@ public class TaiChiList extends AppCompatActivity implements LoaderManager.Loade
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_taichilist);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         headerRecyclerView = findViewById(R.id.recycler_view_horizontal);
         //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        LinearLayoutManager layoutManagerHorizontal = new LinearLayoutManager(TaiChiList.this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerHorizontal = new LinearLayoutManager(TaiChiListActivity.this, LinearLayoutManager.HORIZONTAL, false);
         headerRecyclerView.setLayoutManager(layoutManagerHorizontal);
         headerRecyclerView.setItemAnimator(new DefaultItemAnimator());
         headerAdapter = new HeaderCursorAdapter(this);
         headerRecyclerView.setAdapter(headerAdapter);
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +62,7 @@ public class TaiChiList extends AppCompatActivity implements LoaderManager.Loade
             }
         });
 
-        LoaderManager.getInstance(TaiChiList.this).initLoader(HEADER_LOADER_ID, null, TaiChiList.this);
+        LoaderManager.getInstance(this).initLoader(HEADER_LOADER_ID, null, this);
     }
 
     @Override
@@ -89,26 +90,43 @@ public class TaiChiList extends AppCompatActivity implements LoaderManager.Loade
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+
+        Log.e(LOG_TAG, String.valueOf(CHI_HEADINGS_URI));
+
         //if (id == HEADER_LOADER_ID){
          //   Uri headerUri = CHI_HEADINGS_URI;
 
             String[] projection = {_IDH, C_CHI_HEADINGS};
+
             String selection = null;
             String[] selectionArgs = {};
             String sortOrder = null;
-
+            /*
             return new CursorLoader(getApplicationContext(),
                     CHI_HEADINGS_URI,
                     projection,
                     selection,
                     selectionArgs,
                     sortOrder);
+
+             */
         //}
         // return null;
+
+        Log.e(LOG_TAG, "After projection: " + String.valueOf(projection[1]) + " None");
+
+        return new CursorLoader(this,
+                CHI_HEADINGS_URI,
+                projection,
+                null,
+                null,
+                null);
+
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        Log.e(LOG_TAG, String.valueOf(data));
         headerAdapter.swapCursor(data);
     }
 

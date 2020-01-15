@@ -3,6 +3,7 @@ package com.babarehner.taichilist.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.babarehner.taichilist.data.TaiChiListContract.ChiExercises;
 
@@ -33,6 +34,8 @@ import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH
 
 public class TaiChiDBHelper extends SQLiteOpenHelper {
 
+    private final String LOG_TAG = TaiChiDBHelper.class.getSimpleName();
+
     // To allow for changes in DB versioning and keeping user data
     private static final int DB_VERSION = 1;
 
@@ -51,16 +54,21 @@ public class TaiChiDBHelper extends SQLiteOpenHelper {
                 _IDH + " INTEGER PRIMARY KEY, " +
                 C_CHI_HEADINGS + " TEXT NOT NULL);";
 
+        Log.v(LOG_TAG, "xyzxyzxyz");
+        Log.v(LOG_TAG, SQL_CREATE_CHI_HEADINGS_TABLE);
+
         sqLiteDatabase.execSQL(SQL_CREATE_CHI_HEADINGS_TABLE);
 
+        // Following lines are for debugging- verfify db is created and data is
+        // not null in TChiHeadings. DB checked and working 1/15/20
         String[] headings = {"Yang", "Song", "Tang"};
-
         for (String each : headings) {
             sqLiteDatabase.execSQL("INSERT INTO " + CHI_HEADINGS_TABLE
                     + " ( " + C_CHI_HEADINGS + " ) "
                     + " VALUES( "
                     + "'" + each + "'" + ");");
         }
+
 
         final String SQL_CREATE_CHI_EXERCISES_TABLE = "CREATE TABLE " +
                 ChiExercises.CHI_EXERCISES_TABLE + " (" +
