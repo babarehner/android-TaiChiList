@@ -113,7 +113,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
         //}
         // return null;
 
-        Log.e(LOG_TAG, "After projection: " + String.valueOf(projection[1]) + " None");
+        Log.e(LOG_TAG, "After projection: " + projection[1] + " None");
 
         return new CursorLoader(this,
                 CHI_HEADINGS_URI,
@@ -126,7 +126,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        Log.e(LOG_TAG, String.valueOf(data));
+  //      Log.e(LOG_TAG, String.valueOf(data));
         headerAdapter.swapCursor(data);
     }
 
