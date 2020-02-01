@@ -62,7 +62,7 @@
             android:layout_height="match_parent"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:src="@drawable/ic_title_black_24dp"
+            android:src="@drawable/ic_add_to_queue_black_24dp"
             app:layout_constraintStart_toEndOf="@+id/idHeader"
             app:layout_constraintTop_toTopOf="@+id/idHeader"
             app:layout_constraintBottom_toBottomOf="@+id/idHeader"
