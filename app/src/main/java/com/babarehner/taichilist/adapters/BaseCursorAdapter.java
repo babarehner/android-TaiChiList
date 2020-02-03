@@ -1,4 +1,4 @@
-package com.babarehner.taichilist;
+package com.babarehner.taichilist.adapters;
 
 import android.database.Cursor;
 
@@ -31,7 +31,7 @@ public abstract class BaseCursorAdapter<V extends RecyclerView.ViewHolder> exten
 
     public abstract void onBindViewHolder(V holder, Cursor cursor);
 
-    public BaseCursorAdapter(Cursor c){
+    BaseCursorAdapter(Cursor c){
         setHasStableIds(true);
         swapCursor(c);
     }

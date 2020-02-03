@@ -1,4 +1,4 @@
-package com.babarehner.taichilist;
+package com.babarehner.taichilist.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.babarehner.taichilist.R;
 
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.C_CHI_HEADINGS;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH;

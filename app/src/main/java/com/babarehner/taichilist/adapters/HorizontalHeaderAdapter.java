@@ -1,4 +1,4 @@
-package com.babarehner.taichilist;
+package com.babarehner.taichilist.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.babarehner.taichilist.pojos.ExerciseHeaderHorizontal;
+import com.babarehner.taichilist.R;
 
 import java.util.List;
 
@@ -31,12 +34,13 @@ import java.util.List;
  * limitations under the License.
  */
 
-public class RecyclerViewHorizontalHeaderAdapter extends RecyclerView.Adapter<RecyclerViewHorizontalHeaderAdapter.HeaderViewHolderX> {
+// not used kept around for looking at implementation
+public class HorizontalHeaderAdapter extends RecyclerView.Adapter<HorizontalHeaderAdapter.HeaderViewHolderX> {
 
-    private List<ExerciseHeader>  horizontalHeaderList;
-    Context context;
+    private List<ExerciseHeaderHorizontal>  horizontalHeaderList;
+    private Context context;
 
-    public RecyclerViewHorizontalHeaderAdapter(List<ExerciseHeader> horizontalHeaderList, Context context){
+    public HorizontalHeaderAdapter(List<ExerciseHeaderHorizontal> horizontalHeaderList, Context context){
         this.horizontalHeaderList = horizontalHeaderList;
         this.context = context;
     }
@@ -52,7 +56,7 @@ public class RecyclerViewHorizontalHeaderAdapter extends RecyclerView.Adapter<Re
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHorizontalHeaderAdapter.HeaderViewHolderX holder, final int position) {
+    public void onBindViewHolder(@NonNull HorizontalHeaderAdapter.HeaderViewHolderX holder, final int position) {
         holder.txtview.setText(horizontalHeaderList.get(position).getExerciseHeader());
         holder.txtview.setOnClickListener(new View.OnClickListener() {
             @Override

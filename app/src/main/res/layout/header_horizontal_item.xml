@@ -1,84 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmnls:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    app:cardBackgroundColor="@color/colorAccent"
-    app:cardCornerRadius="16dp"
-    xmlns:xmnls="http://schemas.android.com/tools">
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/main_card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <!--
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_top"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="8dp">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/horizontal_cardview"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintGuide_percent="0.0" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_1"
-            android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.20"/>
-        -->
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_2"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.60" />
-
-
-        <TextView
-            android:id="@+id/idHeader"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:paddingLeft="8dp"
-            android:text="Hello Horizontal "
-            android:textAlignment="center"
-            android:textSize="20sp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardElevation="2dp">
 
-        <!-- TODO change T to circle + -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/idAddEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:src="@drawable/ic_add_to_queue_black_24dp"
-            app:layout_constraintStart_toEndOf="@+id/idHeader"
-            app:layout_constraintTop_toTopOf="@+id/idHeader"
-            app:layout_constraintBottom_toBottomOf="@+id/idHeader"
-            />
+                <TextView
+                    android:id="@+id/idHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:text="Hello Horizontal "
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/idAddEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:src="@drawable/ic_add_to_queue_black_24dp"
+                    app:layout_constraintLeft_toRightOf="@+id/idHeader"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add another Tai TaiChi Group"
-            app:layout_constraintStart_toEndOf="@+id/guideline_2"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-        />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
+    </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>

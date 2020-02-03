@@ -3,6 +3,7 @@ package com.babarehner.taichilist;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import com.babarehner.taichilist.adapters.HeaderCursorAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

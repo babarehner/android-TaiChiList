@@ -1,4 +1,4 @@
-package com.babarehner.taichilist;
+package com.babarehner.taichilist.pojos;
 
 /**
  * Project Name: Tai Chi List
@@ -19,12 +19,14 @@ package com.babarehner.taichilist;
  */
 
 // model class for the Exercise Header that is at the top of each list of exercises
-public class ExerciseHeader {
+public class ExerciseHeaderHorizontal {
 
-    public String exerciseHeader;
+    private String exerciseHeader;
+    private int image;
 
-    public ExerciseHeader(String exerciseHeader){
+    public ExerciseHeaderHorizontal(String exerciseHeader, int image){
         this.exerciseHeader = exerciseHeader;
+        this.image = image;
     }
 
     public String getExerciseHeader(){
@@ -34,4 +36,8 @@ public class ExerciseHeader {
     public void setExerciseHeader(String exerciseHeader){
         this.exerciseHeader = exerciseHeader;
     }
+
+    public int getImage() {return image;}
+
+    public void setImage(int image) {this.image = image;}
 }
