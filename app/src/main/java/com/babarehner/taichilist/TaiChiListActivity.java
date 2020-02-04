@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -30,7 +31,7 @@ import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH
 public class TaiChiListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
     HeaderCursorAdapter.RecyclerViewClickListener {
 
-    private final String LOG_TAG = TaiChiListActivity.class.getSimpleName();
+    private final String TAG = TaiChiListActivity.class.getSimpleName();
 
     private static final int HEADER_LOADER_ID = 1;
 
@@ -92,7 +93,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 
-        Log.e(LOG_TAG, String.valueOf(CHI_HEADINGS_URI));
+        Log.e(TAG, String.valueOf(CHI_HEADINGS_URI));
 
         //if (id == HEADER_LOADER_ID){
          //   Uri headerUri = CHI_HEADINGS_URI;
@@ -114,7 +115,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
         //}
         // return null;
 
-        Log.e(LOG_TAG, "After projection: " + projection[1] + " None");
+        Log.e(TAG, "After projection: " + projection[1] + " None");
 
         return new CursorLoader(this,
                 CHI_HEADINGS_URI,
@@ -139,11 +140,20 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onItemClick(int pos, long id) {
+        Log.d(TAG, "id is : " + id);
        // Intent intent = new Intent(MainActivity.this, ScanPictureActivity.class);
         //Uri currentRecyclerUri = ContentUris.withAppendedId(WALLABY_URI, id);
         //intent.setData(currentRecyclerUri);
         //Toast.makeText(v.getContext(), "id: " + id, Toast.LENGTH_LONG).show();
         //Toast.makeText(v.getContext(), "Uri: " + currentRecyclerUri, Toast.LENGTH_LONG).show();
         //startActivity(intent);
+    }
+
+    @Override
+    public void onImageClick(int pos, long id) {
+        Log.d(TAG, "id is : " + id);
+        FragmentManager fm = getSupportFragmentManager();
+        HeaderDialogFrag editNameDialogFragment = HeaderDialogFrag.newInstance("Some Title");
+        editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 }

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
     private Context mContext;
     private RecyclerViewClickListener mListener;
     private long mRowIdl;
+    private ImageView mImageView;
 
 
     public HeaderCursorAdapter(RecyclerViewClickListener listener){
@@ -67,6 +69,8 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
 
         holder.rowID = cursor.getLong(columnIndex_ID);
         holder.headerTextView.setText(header);
+
+
     }
 
 
@@ -86,21 +90,36 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
             super(v);
 
             headerTextView = itemView.findViewById(R.id.idHeader);
+            mImageView = itemView.findViewById(R.id.idAddEdit);
 
             this.listener = listener;
 
             // set the click listener to the header
             headerTextView.setOnClickListener(this);
+            mImageView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view){
-            view.getId();
-            if (listener != null) {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
-                    listener.onItemClick(position, rowID);
-                }
+            switch (view.getId()){
+                case R.id.idAddEdit:
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onImageClick(position, rowID);
+                        }
+                    }
+                    break;
+                case R.id.idHeader:
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position, rowID);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -110,6 +129,7 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
     public interface RecyclerViewClickListener{
 
         void onItemClick(int pos, long id);
+        void onImageClick(int pos, long id);
     }
 
 
