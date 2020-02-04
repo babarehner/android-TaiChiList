@@ -106,7 +106,7 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onImageClick(position, rowID);
+                            listener.onImageClick(position, rowID, view);
                         }
                     }
                     break;
@@ -129,7 +129,7 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
     public interface RecyclerViewClickListener{
 
         void onItemClick(int pos, long id);
-        void onImageClick(int pos, long id);
+        void onImageClick(int pos, long id, View v);
     }
 
 

@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.loader.app.LoaderManager;
@@ -29,7 +30,7 @@ import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.C_CH
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH;
 
 public class TaiChiListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
-    HeaderCursorAdapter.RecyclerViewClickListener {
+    HeaderCursorAdapter.RecyclerViewClickListener, PopupMenu.OnMenuItemClickListener {
 
     private final String TAG = TaiChiListActivity.class.getSimpleName();
 
@@ -150,10 +151,32 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     }
 
     @Override
-    public void onImageClick(int pos, long id) {
+    public void onImageClick(int pos, long id, View v) {
         Log.d(TAG, "id is : " + id);
-        FragmentManager fm = getSupportFragmentManager();
-        HeaderDialogFrag editNameDialogFragment = HeaderDialogFrag.newInstance("Some Title");
-        editNameDialogFragment.show(fm, "fragment_edit_name");
+        showPopupMenu(v, pos);
+    }
+
+    public void showPopupMenu(View v, int pos){
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.setOnMenuItemClickListener( this);
+        popup.inflate(R.menu.menu_popup);
+        popup.show();
+    }
+
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.edit_column_name:
+                FragmentManager fm = getSupportFragmentManager();
+                HeaderDialogFrag editColumnDialogFragment = HeaderDialogFrag.newInstance("A Title");
+                editColumnDialogFragment.show(fm, "fragment_edit_column");
+                return true;
+            case R.id.add_column:
+                return true;
+            case R.id.delete_column:
+                return true;
+        }
+        return false;
     }
 }

@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Tai Chi Motions</string>
     <string name="action_settings">Settings</string>
+
+    <!-- menu_popup.xml -->
+    <string name="edit_column_name">Edit column name</string>
+    <string name="add_column">Add column</string>
+    <string name="delete_column">Delete Column</string>
+
 </resources>
