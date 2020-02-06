@@ -35,9 +35,11 @@ import android.widget.Toast;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.CHI_HEADINGS_URI;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.C_CHI_HEADINGS;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH;
+import static com.babarehner.taichilist.data.TaiChiListContract.PATH_CHI_HEADINGS_TABLE_NAME;
+import static com.babarehner.taichilist.data.TaiChiListContract.TAI_CHI_LIST_AUTHORITY;
 
 public class TaiChiListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
-    HeaderCursorAdapter.RecyclerViewClickListener, PopupMenu.OnMenuItemClickListener, HeaderAddDialogFrag.AddColumnClickListener {
+    HeaderCursorAdapter.RecyclerViewClickListener, PopupMenu.OnMenuItemClickListener, HeaderAddDialogFrag.AddColumnClickListener, HeaderDeleteDialogFrag.DeleteColumnClickListener {
 
     private final String TAG = TaiChiListActivity.class.getSimpleName();
 
@@ -47,6 +49,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     HeaderCursorAdapter headerAdapter;
 
     private Uri mCurrentRecordUri;
+    private long columnHeaderId;    // the header _ID that is to be updated or deleted
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +154,8 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     }
 
 
-    private void addHeader(String s){
+    private void addHeaderColumn(String s){
+
         ContentValues values = new ContentValues();
         values.put(C_CHI_HEADINGS, s);
 
@@ -161,9 +165,32 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
         } else {
             Toast.makeText(this, "Insert new column succeeded", Toast.LENGTH_LONG).show();
         }
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+    }
 
-        Toast.makeText(this, s+" " + s,Toast.LENGTH_LONG).show();
 
+    private void deleteHeaderColumn(long id){
+
+        String strId = Long.toString(id);
+        Toast.makeText(this, Long.toString(id),
+                Toast.LENGTH_LONG).show();
+
+        Uri.Builder builtUri = new Uri.Builder();
+        builtUri.scheme("content")
+                .authority(TAI_CHI_LIST_AUTHORITY)
+                .appendPath(PATH_CHI_HEADINGS_TABLE_NAME)
+                .appendPath(strId);
+
+        Uri newUri = builtUri.build();
+
+        int rowsDeleted = getContentResolver().delete(newUri, null, null);
+        if (rowsDeleted == 0) {
+            Toast.makeText(this, "Column header delete failed",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Column header deleted",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -180,10 +207,11 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onImageClick(int pos, long id, View v) {
         Log.d(TAG, "id is : " + id);
-        showPopupMenu(v, pos);
+        columnHeaderId = id;  // get the _ID of the header column
+        showPopupMenu(v);
     }
 
-    public void showPopupMenu(View v, int pos){
+    public void showPopupMenu(View v ){
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener( this);
         popup.inflate(R.menu.menu_popup);
@@ -217,7 +245,12 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onAddColumnPositiveClick(String s) {
         //Toast.makeText(this, s, Toast.LENGTH_LONG).show();
-        addHeader(s);
+        addHeaderColumn(s);
 
+    }
+
+    @Override
+    public void onDeleteColumnPositiveClick() {
+        deleteHeaderColumn(columnHeaderId);
     }
 }

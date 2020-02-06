@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -31,8 +32,12 @@ import androidx.fragment.app.DialogFragment;
 
 public class HeaderDeleteDialogFrag extends DialogFragment {
 
-    private String mEditText;
-    private String passthrough;
+    // although interface in Java is always public, Android Studio seems a little confused about this
+    public interface DeleteColumnClickListener{
+        void onDeleteColumnPositiveClick();
+    }
+
+
 
     public HeaderDeleteDialogFrag() {
         // Empty constructor is required for DialogFragment
@@ -55,22 +60,16 @@ public class HeaderDeleteDialogFrag extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(title);
 
+        final TextView tv = new TextView(getContext());
+        tv.setText("Click OK to delete this column");
+        alertDialogBuilder.setView(tv);
 
-
-        final EditText input= new EditText(getContext());
-        input.setHint("Add Column");
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-        alertDialogBuilder.setView(input);
-
-        Bundle bundle = getArguments();
-        passthrough = bundle.getString("TEXT", "");
+        final DeleteColumnClickListener listener = (DeleteColumnClickListener) getContext();
 
         alertDialogBuilder.setPositiveButton("OK",  new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mEditText= input.getText().toString();
-                //Toast.makeText(getContext(), mEditText, Toast.LENGTH_LONG).show();
-                Toast.makeText(getContext(), passthrough, Toast.LENGTH_LONG).show();
+                listener.onDeleteColumnPositiveClick();
             }
         });
 

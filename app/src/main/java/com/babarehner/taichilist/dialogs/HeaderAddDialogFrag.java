@@ -32,7 +32,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class HeaderAddDialogFrag extends DialogFragment {
 
-    interface AddColumnClickListener{
+    public interface AddColumnClickListener{
         void onAddColumnPositiveClick(String s);
     }
 
@@ -85,4 +85,6 @@ public class HeaderAddDialogFrag extends DialogFragment {
 
         return alertDialogBuilder.create();
     }
+
+
 }

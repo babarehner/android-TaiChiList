@@ -50,7 +50,7 @@ public class TaiChiProvider extends ContentProvider {
     private static final int PROVIDER_HEADINGS = 100;
     private static final int PROVIDER_HEADINGS_ID = 101;
     private static final int PROVIDER_EXERCISES = 200;
-    private static final int PROViDER_EXERCISES_ID = 201;
+    private static final int PROVIDER_EXERCISES_ID = 201;
 
     private TaiChiDBHelper mDBHelper;
 
@@ -60,7 +60,7 @@ public class TaiChiProvider extends ContentProvider {
         sUriMatcher.addURI(TAI_CHI_LIST_AUTHORITY, PATH_CHI_HEADINGS_TABLE_NAME, PROVIDER_HEADINGS);
         sUriMatcher.addURI(TAI_CHI_LIST_AUTHORITY, PATH_CHI_HEADINGS_TABLE_NAME + "/#", PROVIDER_HEADINGS_ID);
         sUriMatcher.addURI(TAI_CHI_LIST_AUTHORITY, PATH_CHI_EXERCISES_TABLE_NAME, PROVIDER_EXERCISES);
-        sUriMatcher.addURI(TAI_CHI_LIST_AUTHORITY, PATH_CHI_EXERCISES_TABLE_NAME + "/#", PROViDER_EXERCISES_ID);
+        sUriMatcher.addURI(TAI_CHI_LIST_AUTHORITY, PATH_CHI_EXERCISES_TABLE_NAME + "/#", PROVIDER_EXERCISES_ID);
     }
 
 
@@ -96,7 +96,7 @@ public class TaiChiProvider extends ContentProvider {
             case PROVIDER_EXERCISES:
                 c = db.query(CHI_EXERCISES_TABLE, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
-            case PROViDER_EXERCISES_ID:
+            case PROVIDER_EXERCISES_ID:
                 selection = _IDX + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 c = db.query(CHI_EXERCISES_TABLE, projection, selection, selectionArgs,
@@ -126,7 +126,7 @@ public class TaiChiProvider extends ContentProvider {
                 return CHI_HEADINGS_ITEM_TYPE;
             case PROVIDER_EXERCISES:
                 return CHI_EXERCISES_LIST_TYPE;
-            case PROViDER_EXERCISES_ID:
+            case PROVIDER_EXERCISES_ID:
                 return CHI_EXERCISES_ITEM_TYPE;
             default:
                 throw new IllegalStateException("Unknown Uri: " + uri + "with match: " + match);
@@ -201,7 +201,7 @@ public class TaiChiProvider extends ContentProvider {
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = db.delete(CHI_HEADINGS_TABLE, selection, selectionArgs);
                 break;
-            case PROViDER_EXERCISES_ID:
+            case PROVIDER_EXERCISES_ID:
                 selection = _IDX + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = db.delete(CHI_EXERCISES_TABLE, selection, selectionArgs);
@@ -231,7 +231,7 @@ public class TaiChiProvider extends ContentProvider {
                 return updateHeadings(uri, values, selection, selectionArgs);
             case PROVIDER_EXERCISES:
                 return updateExercises(uri, values, selection, selectionArgs);
-            case PROViDER_EXERCISES_ID:
+            case PROVIDER_EXERCISES_ID:
                 selection = _IDX + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return updateExercises(uri, values, selection, selectionArgs);
