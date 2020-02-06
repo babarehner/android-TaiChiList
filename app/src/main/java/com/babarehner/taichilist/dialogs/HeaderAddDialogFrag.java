@@ -59,7 +59,8 @@ public class HeaderAddDialogFrag extends DialogFragment {
         alertDialogBuilder.setTitle(title);
 
         final EditText input= new EditText(getContext());
-        input.setHint("Add Column");
+        input.setPadding(16,16,16, 16);
+        input.setHint("\n" + "\t" +"Add Column");
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         alertDialogBuilder.setView(input);
 

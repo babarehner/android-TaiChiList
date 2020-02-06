@@ -61,7 +61,8 @@ public class HeaderDeleteDialogFrag extends DialogFragment {
         alertDialogBuilder.setTitle(title);
 
         final TextView tv = new TextView(getContext());
-        tv.setText("Click OK to delete this column");
+        tv.setPadding(16,16,16,16);
+        tv.setText("\n" + "Click OK to delete this column");
         alertDialogBuilder.setView(tv);
 
         final DeleteColumnClickListener listener = (DeleteColumnClickListener) getContext();

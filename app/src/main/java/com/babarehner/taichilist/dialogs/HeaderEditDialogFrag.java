@@ -31,8 +31,10 @@ import androidx.fragment.app.DialogFragment;
 
 public class HeaderEditDialogFrag extends DialogFragment {
 
-    private String mEditText;
-    private String passthrough;
+    public interface EditColumnClickListener{
+        void onEditColumnPositiveClick(String s);
+    }
+
 
     public HeaderEditDialogFrag() {
         // Empty constructor is required for DialogFragment
@@ -55,22 +57,20 @@ public class HeaderEditDialogFrag extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(title);
 
-
-
+        //TODO Have the column header put in the EditText Field and move the cursor to the end of the line
         final EditText input= new EditText(getContext());
-        input.setHint("Add Column");
+        input.setPadding(16,16,16, 16);
+        input.setText("\n" + "\t" +"Edit Column");
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         alertDialogBuilder.setView(input);
 
-        Bundle bundle = getArguments();
-        passthrough = bundle.getString("TEXT", "");
+        final EditColumnClickListener listener = (EditColumnClickListener) getContext();
 
         alertDialogBuilder.setPositiveButton("OK",  new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mEditText= input.getText().toString();
-                //Toast.makeText(getContext(), mEditText, Toast.LENGTH_LONG).show();
-                Toast.makeText(getContext(), passthrough, Toast.LENGTH_LONG).show();
+                String s = input.getText().toString();
+                listener.onEditColumnPositiveClick(s);
             }
         });
 

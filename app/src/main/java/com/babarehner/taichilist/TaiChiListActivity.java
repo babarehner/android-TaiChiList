@@ -39,7 +39,9 @@ import static com.babarehner.taichilist.data.TaiChiListContract.PATH_CHI_HEADING
 import static com.babarehner.taichilist.data.TaiChiListContract.TAI_CHI_LIST_AUTHORITY;
 
 public class TaiChiListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
-    HeaderCursorAdapter.RecyclerViewClickListener, PopupMenu.OnMenuItemClickListener, HeaderAddDialogFrag.AddColumnClickListener, HeaderDeleteDialogFrag.DeleteColumnClickListener {
+    HeaderCursorAdapter.RecyclerViewClickListener, PopupMenu.OnMenuItemClickListener,
+        HeaderAddDialogFrag.AddColumnClickListener, HeaderDeleteDialogFrag.DeleteColumnClickListener,
+                HeaderEditDialogFrag.EditColumnClickListener {
 
     private final String TAG = TaiChiListActivity.class.getSimpleName();
 
@@ -153,7 +155,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
         headerAdapter.swapCursor(null);
     }
 
-
+    //TODO Have addHeaderColumn go to new column header
     private void addHeaderColumn(String s){
 
         ContentValues values = new ContentValues();
@@ -169,6 +171,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     }
 
 
+    //TODO Refactor deleteHeaderColumn and editHeaderColumn static helper class emthod????
     private void deleteHeaderColumn(long id){
 
         String strId = Long.toString(id);
@@ -191,6 +194,32 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
             Toast.makeText(this, "Column header deleted",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void editHeaderColumn(String s){
+
+        ContentValues values = new ContentValues();
+        values.put(C_CHI_HEADINGS, s);
+
+
+        String strId = Long.toString(columnHeaderId);
+        Uri.Builder builtUri = new Uri.Builder();
+        builtUri.scheme("content")
+                .authority(TAI_CHI_LIST_AUTHORITY)
+                .appendPath(PATH_CHI_HEADINGS_TABLE_NAME)
+                .appendPath(strId);
+
+        Uri newUri = builtUri.build();
+
+        int rowsAffected = getContentResolver().update(newUri, values, null, null);
+        if (rowsAffected == 0) {
+            Toast.makeText(this, "Column header update failed",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Column header updated",
+                    Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -252,5 +281,10 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onDeleteColumnPositiveClick() {
         deleteHeaderColumn(columnHeaderId);
+    }
+
+    @Override
+    public void onEditColumnPositiveClick(String s) {
+        editHeaderColumn(s);
     }
 }
