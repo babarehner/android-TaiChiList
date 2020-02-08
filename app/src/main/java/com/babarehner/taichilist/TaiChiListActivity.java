@@ -51,6 +51,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
 
     private Uri mCurrentRecordUri;
     private long columnHeaderId;    // the header _ID that is to be updated or deleted
+    private String columnHeaderStr; // the actual text of the header that is showing
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,9 +235,10 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     }
 
     @Override
-    public void onImageClick(int pos, long id, View v) {
+    public void onImageClick(long id, View v, String columnHeader) {
         Log.d(TAG, "id is : " + id);
         columnHeaderId = id;  // get the _ID of the header column
+        columnHeaderStr = columnHeader;
         showPopupMenu(v);
     }
 
@@ -257,12 +259,12 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
             case R.id.edit_column_name:
                 Konstants.dialogType = EDIT;
                 HeaderDialogFrag editColumnDialogFragment = HeaderDialogFrag.newInstance("Edit Column Name");
-                editColumnDialogFragment.show(fm, "fragment_edit_column");
+                editColumnDialogFragment.show(fm, columnHeaderStr); // pass column header to dialog
                 return true;
             case R.id.add_column:
                 Konstants.dialogType = ADD;
                 HeaderDialogFrag addColumnDialogFragment = HeaderDialogFrag.newInstance("Add New Column");
-                addColumnDialogFragment.show(fm, "fragment_add_column");
+                addColumnDialogFragment.show(fm, "fragment_delete_column");
                 return true;
             case R.id.delete_column:
                 Konstants.dialogType = DELETE;

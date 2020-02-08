@@ -38,11 +38,18 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
 
     public static final String TAG = "HeaderCursorAdapter";
 
+    // Use interface- implemented in MainActivity
+    public interface RecyclerViewClickListener{
+        void onItemClick(int pos, long id);
+        void onImageClick(long id, View v, String columnHeader);
+    }
+
     private Context mContext;
     private RecyclerViewClickListener mListener;
     private long mRowIdl;
     private ImageView mImageView;
 
+    private String headerString;  // holds current headercolumn for passthrough to HeaderDialogFrag
 
     public HeaderCursorAdapter(RecyclerViewClickListener listener){
         super(null);
@@ -70,7 +77,6 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
         holder.rowID = cursor.getLong(columnIndex_ID);
         holder.headerTextView.setText(header);
 
-
     }
 
 
@@ -83,8 +89,10 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
     class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private RecyclerViewClickListener listener;
-        TextView headerTextView;
-        long rowID;
+        private TextView headerTextView;
+        private long rowID;
+        private String headerString;
+
 
         HeaderViewHolder(View v, RecyclerViewClickListener listener){
             super(v);
@@ -105,8 +113,10 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
                 case R.id.idAddEdit:
                     if (listener != null) {
                         int position = getAdapterPosition();
+                        // get current string and pass to HeaderDialogFrag
+                        headerString = headerTextView.getText().toString();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onImageClick(position, rowID, view);
+                            listener.onImageClick(rowID, view, headerString);
                         }
                     }
                     break;
@@ -125,12 +135,6 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
     }
 
 
-    // Use interface- implemented in MainActivity
-    public interface RecyclerViewClickListener{
-
-        void onItemClick(int pos, long id);
-        void onImageClick(int pos, long id, View v);
-    }
 
 
 }
