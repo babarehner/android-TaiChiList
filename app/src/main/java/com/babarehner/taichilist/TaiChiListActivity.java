@@ -7,9 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.babarehner.taichilist.adapters.HeaderCursorAdapter;
-import com.babarehner.taichilist.dialogs.HeaderAddDialogFrag;
-import com.babarehner.taichilist.dialogs.HeaderDeleteDialogFrag;
-import com.babarehner.taichilist.dialogs.HeaderEditDialogFrag;
+import com.babarehner.taichilist.dialogs.HeaderDialogFrag;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -32,6 +30,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import static com.babarehner.taichilist.Konstants.HeaderDialogType.ADD;
+import static com.babarehner.taichilist.Konstants.HeaderDialogType.DELETE;
+import static com.babarehner.taichilist.Konstants.HeaderDialogType.EDIT;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.CHI_HEADINGS_URI;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.C_CHI_HEADINGS;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH;
@@ -39,9 +40,7 @@ import static com.babarehner.taichilist.data.TaiChiListContract.PATH_CHI_HEADING
 import static com.babarehner.taichilist.data.TaiChiListContract.TAI_CHI_LIST_AUTHORITY;
 
 public class TaiChiListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
-    HeaderCursorAdapter.RecyclerViewClickListener, PopupMenu.OnMenuItemClickListener,
-        HeaderAddDialogFrag.AddColumnClickListener, HeaderDeleteDialogFrag.DeleteColumnClickListener,
-                HeaderEditDialogFrag.EditColumnClickListener {
+    HeaderCursorAdapter.RecyclerViewClickListener, PopupMenu.OnMenuItemClickListener,  HeaderDialogFrag.ColumnClickListener {
 
     private final String TAG = TaiChiListActivity.class.getSimpleName();
 
@@ -172,6 +171,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
 
 
     //TODO Refactor deleteHeaderColumn and editHeaderColumn static helper class emthod????
+    //TODO bring focus to new header column
     private void deleteHeaderColumn(long id){
 
         String strId = Long.toString(id);
@@ -248,40 +248,41 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     }
 
 
+    // TODO add 'column header value' string to text of edit column
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
+        FragmentManager fm = getSupportFragmentManager();
         switch(item.getItemId()){
             case R.id.edit_column_name:
-                FragmentManager fmEdit = getSupportFragmentManager();
-                HeaderEditDialogFrag editColumnDialogFragment = HeaderEditDialogFrag.newInstance("Edit Column Name");
-                editColumnDialogFragment.show(fmEdit, "fragment_edit_column");
+                Konstants.dialogType = EDIT;
+                HeaderDialogFrag editColumnDialogFragment = HeaderDialogFrag.newInstance("Edit Column Name");
+                editColumnDialogFragment.show(fm, "fragment_edit_column");
                 return true;
             case R.id.add_column:
-                FragmentManager fmAdd = getSupportFragmentManager();
-                HeaderAddDialogFrag addColumnDialogFragment = HeaderAddDialogFrag.newInstance("Add New Column");
-                addColumnDialogFragment.show(fmAdd, "fragment_add_column");
+                Konstants.dialogType = ADD;
+                HeaderDialogFrag addColumnDialogFragment = HeaderDialogFrag.newInstance("Add New Column");
+                addColumnDialogFragment.show(fm, "fragment_add_column");
                 return true;
             case R.id.delete_column:
-                FragmentManager fmDelete = getSupportFragmentManager();
-                HeaderDeleteDialogFrag deleteColumnDialogFragment = HeaderDeleteDialogFrag.newInstance("Delete This Column");
-                deleteColumnDialogFragment.show(fmDelete, "fragment_delete_column");
+                Konstants.dialogType = DELETE;
+                HeaderDialogFrag deleteColumnDialogFragment = HeaderDialogFrag.newInstance("Delete This Column");
+                deleteColumnDialogFragment.show(fm, "fragment_delete_column");
                 return true;
         }
         return false;
     }
 
-    @Override
-    public void onAddColumnPositiveClick(String s) {
-        //Toast.makeText(this, s, Toast.LENGTH_LONG).show();
-        addHeaderColumn(s);
 
-    }
+    @Override
+    public void onAddColumnPositiveClick(String s) { addHeaderColumn(s); }
+
 
     @Override
     public void onDeleteColumnPositiveClick() {
         deleteHeaderColumn(columnHeaderId);
     }
+
 
     @Override
     public void onEditColumnPositiveClick(String s) {

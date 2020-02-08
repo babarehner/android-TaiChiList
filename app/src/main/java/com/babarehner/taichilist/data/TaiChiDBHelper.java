@@ -59,9 +59,9 @@ public class TaiChiDBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(SQL_CREATE_CHI_HEADINGS_TABLE);
 
-        // Following lines are for debugging- verfify db is created and data is
-        // not null in TChiHeadings. DB checked and working 1/15/20
-        String[] headings = {"Click + to add/edit heading", "Yang", "Song", "Tang"};
+
+        // TODO remove initialization and add clickable link in program to enter headings
+        String[] headings = {"Click + to add/edit heading"};
         for (String each : headings) {
             sqLiteDatabase.execSQL("INSERT INTO " + CHI_HEADINGS_TABLE
                     + " ( " + C_CHI_HEADINGS + " ) "
