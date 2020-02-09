@@ -41,13 +41,14 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
     // Use interface- implemented in MainActivity
     public interface RecyclerViewClickListener{
         void onItemClick(int pos, long id);
-        void onImageClick(long id, View v, String columnHeader);
+        void onImageClick(long id, int pos,  View v, String columnHeader);
     }
 
     private Context mContext;
     private RecyclerViewClickListener mListener;
     private long mRowIdl;
     private ImageView mImageView;
+    private int pos;
 
     private String headerString;  // holds current headercolumn for passthrough to HeaderDialogFrag
 
@@ -113,10 +114,11 @@ public class HeaderCursorAdapter extends BaseCursorAdapter<HeaderCursorAdapter.H
                 case R.id.idAddEdit:
                     if (listener != null) {
                         int position = getAdapterPosition();
+                        // int position = getLayoutPosition();
                         // get current string and pass to HeaderDialogFrag
                         headerString = headerTextView.getText().toString();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onImageClick(rowID, view, headerString);
+                            listener.onImageClick(rowID, position,  view, headerString);
                         }
                     }
                     break;

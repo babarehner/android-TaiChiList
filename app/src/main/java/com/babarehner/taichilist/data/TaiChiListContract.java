@@ -56,6 +56,7 @@ public class TaiChiListContract {
         // the globals for the columns in the TChiHeading table
         public static final String _IDH = BaseColumns._ID;
         public static final String C_CHI_HEADINGS = "CHeading";
+        public static final String C_HEADINGS_SORT_ORDER = "CSortOrder";
     }
 
 

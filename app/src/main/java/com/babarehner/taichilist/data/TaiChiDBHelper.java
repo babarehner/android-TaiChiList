@@ -11,6 +11,7 @@ import static com.babarehner.taichilist.data.TaiChiListContract.*;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiExercises.FK_CHI_HEADINGS;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.CHI_HEADINGS_TABLE;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.C_CHI_HEADINGS;
+import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings.C_HEADINGS_SORT_ORDER;
 import static com.babarehner.taichilist.data.TaiChiListContract.ChiHeadings._IDH;
 
 
@@ -52,7 +53,8 @@ public class TaiChiDBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_CHI_HEADINGS_TABLE = "CREATE TABLE " +
                 CHI_HEADINGS_TABLE + " (" +
                 _IDH + " INTEGER PRIMARY KEY, " +
-                C_CHI_HEADINGS + " TEXT NOT NULL);";
+                C_CHI_HEADINGS + " TEXT NOT NULL, "  +
+                C_HEADINGS_SORT_ORDER + " INTEGER);";
 
         Log.v(LOG_TAG, "xyzxyzxyz");
         Log.v(LOG_TAG, SQL_CREATE_CHI_HEADINGS_TABLE);
@@ -61,6 +63,7 @@ public class TaiChiDBHelper extends SQLiteOpenHelper {
 
 
         // TODO remove initialization and add clickable link in program to enter headings
+        // TODO add sortorder field to table
         String[] headings = {"Click + to add/edit heading"};
         for (String each : headings) {
             sqLiteDatabase.execSQL("INSERT INTO " + CHI_HEADINGS_TABLE

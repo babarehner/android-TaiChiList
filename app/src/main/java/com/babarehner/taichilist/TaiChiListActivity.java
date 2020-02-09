@@ -3,10 +3,13 @@ package com.babarehner.taichilist;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.babarehner.taichilist.adapters.HeaderCursorAdapter;
+import com.babarehner.taichilist.data.TaiChiProvider;
 import com.babarehner.taichilist.dialogs.HeaderDialogFrag;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -52,6 +55,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     private Uri mCurrentRecordUri;
     private long columnHeaderId;    // the header _ID that is to be updated or deleted
     private String columnHeaderStr; // the actual text of the header that is showing
+    private int position; // the position in recyclerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
         headerRecyclerView.setItemAnimator(new DefaultItemAnimator());
         headerAdapter = new HeaderCursorAdapter(this);
         headerRecyclerView.setAdapter(headerAdapter);
+
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -120,18 +125,6 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
 
             String selection = null;
             String[] selectionArgs = {};
-            String sortOrder = null;
-            /*
-            return new CursorLoader(getApplicationContext(),
-                    CHI_HEADINGS_URI,
-                    projection,
-                    selection,
-                    selectionArgs,
-                    sortOrder);
-
-             */
-        //}
-        // return null;
 
         Log.e(TAG, "After projection: " + projection[1] + " None");
 
@@ -166,8 +159,14 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
             Toast.makeText(this, "Insert new column failed", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Insert new column succeeded", Toast.LENGTH_LONG).show();
+
+            // gets position of header column that added the new column, not the column where the new header is
+            Toast.makeText(this, "Position= " + position, Toast.LENGTH_LONG).show();
+            headerRecyclerView.smoothScrollToPosition(position);
         }
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+
+
+
     }
 
 
@@ -197,6 +196,7 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
         }
     }
 
+    // TODO Check will need update currently dpends on DESC sortOrder to go to added Header
     private void editHeaderColumn(String s){
 
         ContentValues values = new ContentValues();
@@ -221,6 +221,8 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
                     Toast.LENGTH_LONG).show();
         }
 
+
+
     }
 
     @Override
@@ -235,10 +237,11 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
     }
 
     @Override
-    public void onImageClick(long id, View v, String columnHeader) {
+    public void onImageClick(long id, int pos, View v, String columnHeader) {
         Log.d(TAG, "id is : " + id);
         columnHeaderId = id;  // get the _ID of the header column
         columnHeaderStr = columnHeader;
+        position = pos;
         showPopupMenu(v);
     }
 
