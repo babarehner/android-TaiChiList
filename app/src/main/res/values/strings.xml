@@ -7,4 +7,10 @@
     <string name="add_column">Add column</string>
     <string name="delete_column">Delete Column</string>
 
+    <!-- AddEditExerciseActivity -->
+    <string name="add_exercise">Add Exercise</string>
+    <string name="edit_exercise">Edit Exercise</string>
+    <string name="add_exercise_here">Add an exercise here</string>
+
+
 </resources>

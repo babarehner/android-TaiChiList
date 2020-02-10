@@ -20,6 +20,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".data.AddEditExerciseActivity"
+            android:parentActivityName=".TaiChiListActivity">
+            <!-- Parent activity metadata to support Android 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".data.AddEditExerciseActivity" />
+        </activity>
+
         <provider
             android:name=".data.TaiChiProvider"
             android:authorities="com.babarehner.taichilist"

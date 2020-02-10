@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.babarehner.taichilist.adapters.HeaderCursorAdapter;
+import com.babarehner.taichilist.data.AddEditExerciseActivity;
 import com.babarehner.taichilist.data.TaiChiProvider;
 import com.babarehner.taichilist.dialogs.HeaderDialogFrag;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -82,8 +83,10 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(TaiChiListActivity.this, AddEditExerciseActivity.class);
+                startActivity(intent);
+                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
             }
         });
 
