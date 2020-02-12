@@ -273,4 +273,27 @@ public class TaiChiProvider extends ContentProvider {
     }
 
 
+    public int getSortOrderMax(@NonNull Uri uri){
+        SQLiteDatabase db = mDBHelper.getReadableDatabase();
+        Cursor c;
+        String[] projection;
+        final int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case PROVIDER_HEADINGS:
+                projection = new String[]{_IDH};
+                c = db.query(CHI_HEADINGS_TABLE, projection, null, null, null,
+                        null, null);
+                return c.getCount();
+            case PROVIDER_EXERCISES:
+                projection = new String[]{_IDX};
+                c = db.query(CHI_EXERCISES_TABLE, projection, null, null, null,
+                        null, null);
+                return c.getCount();
+            default:
+                return -1;
+        }
+
+    }
+
 }

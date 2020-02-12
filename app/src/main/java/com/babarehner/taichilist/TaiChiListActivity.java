@@ -21,7 +21,9 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver;
 
 import android.util.Log;
 import android.view.View;
@@ -47,6 +49,8 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
 
     private RecyclerView headerRecyclerView;
     HeaderCursorAdapter headerAdapter;
+    LinearLayoutManager layoutManagerHorizontal;
+
 
     private Uri mCurrentRecordUri;
     private long columnHeaderId;    // the header _ID that is to be updated or deleted
@@ -66,11 +70,26 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
 
         headerRecyclerView = findViewById(R.id.recycler_view_horizontal);
         //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        LinearLayoutManager layoutManagerHorizontal = new LinearLayoutManager(TaiChiListActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        layoutManagerHorizontal = new LinearLayoutManager(TaiChiListActivity.this, LinearLayoutManager.HORIZONTAL, false);
         headerRecyclerView.setLayoutManager(layoutManagerHorizontal);
         headerRecyclerView.setItemAnimator(new DefaultItemAnimator());
         headerAdapter = new HeaderCursorAdapter(this);
         headerRecyclerView.setAdapter(headerAdapter);
+
+    // not working
+        headerAdapter.registerAdapterDataObserver(new AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                headerRecyclerView.getLayoutManager().scrollToPosition(itemCount);
+                Toast.makeText(getApplicationContext() , "Position= " + positionStart, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                headerRecyclerView.getLayoutManager().scrollToPosition(itemCount);
+            }
+        });
 
 
 
@@ -146,26 +165,82 @@ public class TaiChiListActivity extends AppCompatActivity implements LoaderManag
         headerAdapter.swapCursor(null);
     }
 
+
     //TODO Have addHeaderColumn go to new column header
-    private void addHeaderColumn(String s){
+    private void addHeaderColumn(String s) {
 
         ContentValues values = new ContentValues();
         values.put(C_CHI_HEADINGS, s);
 
         Uri newUri = getContentResolver().insert(CHI_HEADINGS_URI, values);
-        if (newUri == null){
+        if (newUri == null) {
             Toast.makeText(this, "Insert new column failed", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Insert new column succeeded", Toast.LENGTH_LONG).show();
 
-            // gets position of header column that added the new column, not the column where the new header is
-            Toast.makeText(this, "Position= " + position, Toast.LENGTH_LONG).show();
-            headerRecyclerView.smoothScrollToPosition(position);
         }
+            // gets position of header column that added the new column, not the column where the new header is
+            //final int count = count(CHI_HEADINGS_URI);
+            //Toast.makeText(this, "Position= " + count, Toast.LENGTH_LONG).show();
+            // hack to delay moving to postion until Recyler View has return- wait 500ms hack
+            /*
+            headerRecyclerView.postDelayed(new Runnable() {
+                                               @Override
+                                               public void run() {
+                                                   headerRecyclerView.smoothScrollToPosition(count);
+                                               }
+                                           }, 500);
+
+            */
+            // headerRecyclerView.getLayoutManager().scrollToPosition(count);
+
+            /*
+            RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
+                @Override protected int getVerticalSnapPreference() {
+                    return LinearSmoothScroller.SNAP_TO_START;
+                }
+            };
+            smoothScroller.setTargetPosition(count);
+            layoutManagerHorizontal.startSmoothScroll(smoothScroller);
+            */
+
 
 
 
     }
+
+
+
+
+    public int count(Uri uri) {
+        String[] projection = {_IDH};
+        Cursor c = getContentResolver().query(uri, projection,
+                null, null, null);
+        int pos = c.getCount();
+        return c.getCount();
+    }
+
+
+    /*
+    public int count(Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = getContentResolver().query(uri,new String[] {"count(*)"},
+                selection, selectionArgs, null);
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            return 0;
+        } else {
+            cursor.moveToFirst();
+            int result = cursor.getInt(0);
+            cursor.close();
+            return cursor.getCount();
+            // return result
+        }
+    }
+    */
+
+
+
+
 
 
     //TODO Refactor deleteHeaderColumn and editHeaderColumn static helper class emthod????
