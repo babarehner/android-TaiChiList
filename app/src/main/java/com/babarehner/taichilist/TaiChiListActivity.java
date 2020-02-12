@@ -3,17 +3,12 @@ package com.babarehner.taichilist;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.babarehner.taichilist.adapters.HeaderCursorAdapter;
-import com.babarehner.taichilist.data.AddEditExerciseActivity;
-import com.babarehner.taichilist.data.TaiChiProvider;
 import com.babarehner.taichilist.dialogs.HeaderDialogFrag;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

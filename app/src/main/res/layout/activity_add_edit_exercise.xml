@@ -1,33 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <LinearLayout
-        tools:visibility="visible"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="5dp"
-            android:layout_height="29dp"
-            android:layout_weight="1"
-            android:text="TextView" />
-
-        <EditText
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/exercise"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            tools:layout_editor_absoluteX="15dp" />
+
+        <EditText
+            android:id="@+id/editExercise"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
             android:hint="@string/add_exercise_here"
-            android:autofillHints="@string/add_exercise_here"
-            tools:visibility="visible"
-            android:inputType="textCapWords"/>
+            android:inputType="textMultiLine|textCapSentences|textCapWords"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_creator="@id/textView"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
+        <TextView
+            android:id="@+id/directions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/directions"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editExercise"
+            tools:layout_editor_absoluteX="181dp" />
 
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imageViewBagua"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_bagua1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/directions" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/directions" />
+
+
+        <ImageView
+            android:id="@+id/imageViewN"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_arrow_north_24dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBagua"
+            app:layout_constraintStart_toStartOf="parent"
+            android:clickable="true"
+            android:onClick="setDirection"
+            android:focusable="true"
+             />
+
+        <ImageView
+            android:id="@+id/imageViewNE"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_arrow_northeast_24dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBagua"
+            app:layout_constraintStart_toEndOf="@+id/imageViewN"
+            android:clickable="true"
+            android:onClick="setDirection"
+            android:focusable="true"
+            />
+
+
+        <ImageView
+            android:id="@+id/imageViewE"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_arrow_east_24dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBagua"
+            app:layout_constraintStart_toEndOf="@+id/imageViewNE"
+            android:clickable="true"
+            android:onClick="setDirection"
+            android:focusable="true"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewSE"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_arrow_southeast_24dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBagua"
+            app:layout_constraintStart_toEndOf="@+id/imageViewE"
+            android:clickable="true"
+            android:onClick="setDirection"
+            android:focusable="true"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewS"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_arrow_south_24dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBagua"
+            app:layout_constraintStart_toEndOf="@+id/imageViewSE"
+            android:clickable="true"
+            android:onClick="setDirection"
+            android:focusable="true"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewSW"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_arrow_southwest_24dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBagua"
+            app:layout_constraintStart_toEndOf="@+id/imageViewS"
+            android:clickable="true"
+            android:onClick="setDirection"
+            android:focusable="true"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewW"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_arrow_west_24dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBagua"
+            app:layout_constraintStart_toEndOf="@+id/imageViewSW"
+            android:clickable="true"
+            android:onClick="setDirection"
+            android:focusable="true"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewNW"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_arrow_northwest_24dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBagua"
+            app:layout_constraintStart_toEndOf="@+id/imageViewW"
+            android:clickable="true"
+            android:onClick="setDirection"
+            android:focusable="true"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

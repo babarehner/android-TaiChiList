@@ -21,12 +21,12 @@
         </activity>
 
         <activity
-            android:name=".data.AddEditExerciseActivity"
+            android:name=".AddEditExerciseActivity"
             android:parentActivityName=".TaiChiListActivity">
             <!-- Parent activity metadata to support Android 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".data.AddEditExerciseActivity" />
+                android:value=".AddEditExerciseActivity" />
         </activity>
 
         <provider

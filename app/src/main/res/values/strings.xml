@@ -7,10 +7,19 @@
     <string name="add_column">Add column</string>
     <string name="delete_column">Delete Column</string>
 
+    <!-- menu_add_edit_exercise.xml -->
+    <string name="action_delete">Delete Exercise</string>
+    <string name="action_save">Save</string>
+
     <!-- AddEditExerciseActivity -->
     <string name="add_exercise">Add Exercise</string>
     <string name="edit_exercise">Edit Exercise</string>
     <string name="add_exercise_here">Add an exercise here</string>
+    <string name="exercise">Exercise:</string>
+    <string name="directions">
+        To set the direction for your exercise on the bagua below click on one of the arrows below.
+        The arrow will show up on the bagua.
+    </string>
 
 
 </resources>
